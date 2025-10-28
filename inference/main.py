@@ -47,7 +47,7 @@ def parse_args():
         "--tensor_parallel_size",
         type=int,
         default=1,
-        help='number of tensor parallel replicas'
+        help="number of tensor parallel replicas",
     )
     parser.add_argument(
         "--revision",
@@ -158,9 +158,9 @@ def parse_args():
 
     args.precision = precision_map[args.precision]
     args.tasks = pattern_match(args.tasks.split(","), ALL_TASKS)
-    assert (
-        len(args.tasks) == 1
-    ), f"Only one task is supported at the moment, you gave {args.tasks}"
+    assert len(args.tasks) == 1, (
+        f"Only one task is supported at the moment, you gave {args.tasks}"
+    )
     args.task_name = args.tasks[0]
 
     assert args.instruction_tokens is None, "Instruction tokens are not supported yet"
@@ -186,9 +186,9 @@ def main():
     datasets.logging.set_verbosity_error()
 
     model = LLM(
-        model=args.model, 
-        dtype=args.precision, 
-        trust_remote_code=args.trust_remote_code, 
+        model=args.model,
+        dtype=args.precision,
+        trust_remote_code=args.trust_remote_code,
         gpu_memory_utilization=0.98,
         tensor_parallel_size=args.tensor_parallel_size,
     )

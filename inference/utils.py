@@ -92,8 +92,11 @@ def complete_code(
             )
             continue
         sampling_params.max_tokens = max_length_generation - num_tokens
+
         outputs = model.generate(
-            prompt_token_ids=inputs, sampling_params=sampling_params, use_tqdm=False
+            list(map(lambda x: {"prompt_token_ids": x}, inputs)),
+            sampling_params=sampling_params,
+            use_tqdm=False,
         )
 
         generated_tasks = batch["row_index"].repeat(batch_size)
